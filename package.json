@@ -1,0 +1,26 @@
+{
+  "name": "talkhere",
+  "version": "1.0.0",
+  "description": "A simple nodejs chat room",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Pingze-github/talkHere.git"
+  },
+  "author": "wang719695@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pingze-github/talkHere/issues"
+  },
+  "homepage": "https://github.com/Pingze-github/talkHere#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.4",
+    "mongoose": "^4.11.5",
+    "socket.io": "^2.0.3"
+  }
+}
