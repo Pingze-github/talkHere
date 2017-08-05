@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <title>TalkHere Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+    </style>
+</head>
+<body>
+    <form action="">
+        <label>登录通行证</label>
+        <input id="pst" autocomplete="off" placeholder="Please input your passport"/>
+        <button id="submit" onclick="javascript:void(0)">Submit</button>
+    </form>
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script>
+        $('#submit').click(() =>{submit()});
+        function submit() {
+          let $pst = $('#pst');
+          let pst = $pst.val();
+          if (!pst.match(/\d{6}/)) {
+            alert('Please input passport in correct format!');
+            $pst.val('');
+            return;
+          }
+          $.post('/login', {pst}, (res) => {
+            if (res.code === 0) {
+            } else {
+              alert('invalid passport, try again...')
+              $pst.val('');
+            }
+          });
+        }
+    </script>
+</body>
+</html>

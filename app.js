@@ -10,16 +10,30 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 require('./globals');
 const router = require('./router');
+const login = require('./middlewares/login');
 
 mongoose.Promise = Promise;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
 app.use(express.static('public'));
+
+app.use(session({
+  secret: 'talkHere',
+  maxAge: 7 * 24 * 3600 * 1000,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+
+app.use(login());
 
 app.use(router);
 
