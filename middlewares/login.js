@@ -9,7 +9,6 @@ function getIp(req) {
 module.exports = function () {
   return function (req, res ,next) {
     console.log()
-    console.log(req.url)
     console.log(req.session.id);
 /*    if (req.url === '/login') {
       if (req.method === 'POST') {

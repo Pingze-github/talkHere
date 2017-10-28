@@ -1,5 +1,5 @@
 /**
- * 简单聊天室
+ * TalkHere
  * author: wang719695@henhaoji.com
  * create: 2017.8.1
  */
@@ -49,13 +49,16 @@ app.use((err, req, res, next) => {
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+
+  socket.on('connect', function(){
+    console.log(`User ${socket.conn.remoteAddress} connected`);
+  });
   socket.on('disconnect', function(){
-    console.log('a user disconnected');
+    console.log(`User ${socket.conn.remoteAddress} disconnected`);
   });
 
   socket.on('say', function(msg){
-    console.log('message: ' + msg);
+    console.log(`User ${socket.conn.remoteAddress} say ${msg}`);
     io.emit('say', msg);
   });
 });
@@ -63,3 +66,4 @@ io.on('connection', function(socket){
 http.listen(config.port, () => {
   console.log(`server running at ${config.port} ...`)
 });
+

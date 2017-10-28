@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+    <title>Socket.IO chat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <style>
+        html {
+            font-size:62.5%;
+            width:100%;
+            height:100%;
+            -webkit-font-smoothing:antialiased;
+        }
+        body {
+            text-align:center;
+            -webkit-user-select:none;
+            width:100%;
+            height:100%;
+            /*background:#fff;*/   /*默认背景颜色*/
+            /*font-size:1.2rem;*/   /*默认字体大小*/
+            /*color: #000;*/   /*默认字体颜色*/
+            font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,STHeiTi,sans-serif;
+            -webkit-text-size-adjust:none;
+        }
+        * {
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        i, em, b {
+            font-style:normal;
+            font-weight:normal;
+        }
+        :-moz-placeholder {color:#ccc;}
+        ::-moz-placeholder {color:#ccc;}
+        ::-webkit-textarea-placeholder {color:#ccc;}
+        :-ms-textarea-placeholder {color:#ccc;}
+
+        img{
+            width:100%;
+            vertical-align:top;
+        }
+/*        input,textarea,select{
+            -webkit-appearance:none;
+            font-size:1.2rem;
+            border:0;
+            background:transparent;
+            font-family:"黑体","Microsoft YaHei","Helvetica Neue",Helvetica,STHeiTi,sans-serif;
+            outline:none;
+        }
+        input,a,span{
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }*/
+
+        /*flex最外框*/
+        .page{
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            height:100%;
+        }
+        /*flex内容区*/
+        .page .content{
+            position:relative;
+            -webkit-box-flex:1;
+            -webkit-flex:1;
+            flex:1;
+            overflow:auto;
+            -webkit-overflow-scrolling:touch;
+            background-color:#ccc;
+        }
+        /*flex头部*/
+        .header{
+            display: -webkit-box;
+        }
+        .header *{
+            display: block;
+        }
+        /*flex底部，按钮平均分布*/
+        .footer{
+            overflow: hidden;
+            background:#fff;
+        }
+
+
+        #messages {
+            list-style-type:none;
+        }
+        #messages li { padding:5px 10px; }
+        #form {
+            bottom:0;
+            position:fixed;
+            height:2rem;
+            background:#000;
+            padding:3px;
+            width:100%;
+        }
+        #form input { border:0; padding:10px; width:50%; margin-right:.5%; height: 2rem}
+        #form button { width:9%; background:rgb(130, 224, 255); border:none; padding: 10px; }
+    </style>
+</head>
+<body>
+    <section class="page">
+        <header class="header">
+            头部
+        </header>
+        <section class="content">
+            <ul id="messages"></ul>
+        </section>
+        <footer class="footer">
+            <form id="form" action="">
+                <input id="inputbox" autocomplete="off" />
+                <button>Send</button>
+            </form>
+        </footer>
+    </section>
+    <script>
+/*        alert(window.innerHeight)
+        alert(document.body.scrollHeight)*/
+    </script>
+    <script src="/lib/socket.io/socket.io.js"></script>
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <script src="/javascript/index.js"></script>
+</body>
+</html>
