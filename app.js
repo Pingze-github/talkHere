@@ -57,9 +57,15 @@ io.on('connection', function(socket){
     console.log(`User ${socket.conn.remoteAddress} disconnected`);
   });
 
-  socket.on('say', function(msg){
-    console.log(`User ${socket.conn.remoteAddress} say ${msg}`);
-    io.emit('say', msg);
+  socket.on('say', function(data){
+    console.log(`User ${socket.conn.remoteAddress} say ${data.msg}`);
+    dataHear = {
+      ioid: data.ioid,
+      msg: data.msg,
+      user: socket.conn.remoteAddress.match(/::(.+)/)[1].replace('ffff:',''),
+      time: new Date()
+    };
+    io.emit('hear', dataHear);
   });
 });
 

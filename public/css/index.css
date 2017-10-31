@@ -4,9 +4,14 @@
     height: 40px;
     width:100%;
     display: flex;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     font-size: 18px;
+}
+
+#footer {
+    height: 40px;
+    width: 100%;
 }
 
 #inputbox {
@@ -28,4 +33,44 @@
     #sendbtn {
         width: 100px;
     }
+}
+
+#messages{
+    padding: 10px 0 10px 0;
+}
+
+#messages li{
+    list-style-type:none;
+    margin: 10px 0 10px 0;
+}
+
+#messages li div.left{
+
+}
+
+#messages li>div>div.info {
+    margin-left: 5px;
+    padding-right: 5px;
+}
+
+#messages li>div>div.info span.time{
+    color: green;
+}
+
+#messages li>div>div.info span.user{
+    margin-left: 10px;
+}
+
+#messages li>div>div.bubble{
+    display: inline-block;
+    max-width: 100%;
+    background: lightskyblue;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+#messages li>div.right>div.bubble{
+    float:right;
+    margin-right: 5px;
 }
