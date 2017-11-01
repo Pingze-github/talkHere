@@ -1,4 +1,7 @@
 
+::-webkit-scrollbar{
+    display:none;
+}
 
 #sender {
     height: 40px;

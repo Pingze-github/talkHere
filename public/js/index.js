@@ -37,6 +37,7 @@ $(function () {
       $newMsg.append($('<div>').addClass('col-md-5').addClass('col-xs-5'));
     }
     $msgs.append($newMsg);
+    scrollToBottom();
   });
 
   // hotkey
@@ -63,5 +64,11 @@ $(function () {
 
   function createID() {
     return new Date().getTime();
+  }
+
+  function scrollToBottom() {
+    console.log('scroll')
+    var h = $(document).height() - $(window).height();
+    $(document).scrollTop(h);
   }
 });
