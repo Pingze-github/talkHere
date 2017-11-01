@@ -30,7 +30,7 @@ app.use(session({
   maxAge: 7 * 24 * 3600 * 1000,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: {secure: false, httpOnly: false, maxAge: 7 * 24 * 60 * 1000}
 }));
 
 app.use(login());

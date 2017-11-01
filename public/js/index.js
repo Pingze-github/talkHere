@@ -63,7 +63,8 @@ $(function () {
   }
 
   function createID() {
-    return new Date().getTime();
+    var matches = document.cookie.match('connect.sid=(.+)');
+    return matches[1];
   }
 
   function scrollToBottom() {
