@@ -7,9 +7,22 @@ function getIp(req) {
 }
 
 module.exports = function () {
+  let userNum = 0;
   return function (req, res ,next) {
-    console.log()
-    console.log(req.session.id);
+    if (req.url === '/login') {
+      if (!req.session.user) {
+        userNum ++;
+        req.session.user = {
+          name: '无名氏' + userNum
+        };
+      }
+      return res.redirect('/');
+    } else {
+      if (!req.session.user) {
+        res.redirect('/login');
+      }
+    }
+    console.log(req.session.user);
 /*    if (req.url === '/login') {
       if (req.method === 'POST') {
         if (config.psts.includes(req.body.pst)) {

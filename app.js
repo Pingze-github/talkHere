@@ -62,7 +62,7 @@ io.on('connection', function(socket){
     dataHear = {
       ioid: data.ioid,
       msg: data.msg,
-      user: socket.conn.remoteAddress.match(/::(.+)/)[1].replace('ffff:',''),
+      user: data.user,
       time: new Date()
     };
     io.emit('hear', dataHear);

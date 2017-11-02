@@ -4,6 +4,12 @@ $(function () {
   var $sbtn = $('#sendbtn');
   var $msgs = $('#messages');
 
+  // user
+  var user;
+  $.get('/user', function (res) {
+    if (!res.code) user = res.data;
+  });
+
   // socket
   var socket = io();
   var ioid = createID();
@@ -11,7 +17,8 @@ $(function () {
     if ($input.val() === '') return;
     var data = {
       msg: $input.val(),
-      ioid: ioid
+      ioid: ioid,
+      user: user
     };
     socket.emit('say', data);
     $input.val('');
@@ -23,7 +30,7 @@ $(function () {
     var $newMsg = $('<li>').addClass('row');
     var $newMsgInner = $('<div>');
     var $info = $('<div>').addClass('info');
-    var user = isMe ? '我' : data.user;
+    var user = isMe ? '我' : data.user.name;
     $info.append($('<span>').addClass('time').text(dateFormat(new Date(data.time), 'hh:mm:ss')));
     $info.append($('<span>').addClass('user').text(user));
     if (isMe) $info.css('text-align', 'right');

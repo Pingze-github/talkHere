@@ -7,6 +7,6 @@ router.get('/', (req, res) => {
   res.sendFile(ROOTPATH + '/views/index.html');
 });
 
-router.get('/m', (req, res) => {
-  res.sendFile(ROOTPATH + '/views/mindex.html');
+router.get('/user', (req, res) => {
+  res.json({code:0, data: req.session.user});
 });
