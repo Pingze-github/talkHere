@@ -8,17 +8,20 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
+process.on('unhandledRejection', (rej) => {
+  console.error(rej);
+});
+
+require('./io')(io);
 
 require('./globals');
 const router = require('./router');
 const login = require('./middlewares/login');
-
-mongoose.Promise = Promise;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -27,10 +30,11 @@ app.use(express.static('public'));
 
 app.use(session({
   secret: 'talkHere',
-  maxAge: 7 * 24 * 3600 * 1000,
+  maxAge: 30 * 24 * 3600 * 1000,
   resave: false,
   saveUninitialized: true,
-  cookie: {secure: false, httpOnly: false, maxAge: 7 * 24 * 60 * 1000}
+  cookie: {secure: false, httpOnly: false, maxAge: 7 * 24 * 60 * 1000},
+  store: new MongoStore({url: $config.mongo.url})
 }));
 
 app.use(login());
@@ -48,28 +52,8 @@ app.use((err, req, res, next) => {
   res.end('internal error');
 });
 
-io.on('connection', function(socket){
 
-  socket.on('connect', function(){
-    console.log(`User ${socket.conn.remoteAddress} connected`);
-  });
-  socket.on('disconnect', function(){
-    console.log(`User ${socket.conn.remoteAddress} disconnected`);
-  });
-
-  socket.on('say', function(data){
-    console.log(`User ${socket.conn.remoteAddress} say ${data.msg}`);
-    dataHear = {
-      ioid: data.ioid,
-      msg: data.msg,
-      user: data.user,
-      time: new Date()
-    };
-    io.emit('hear', dataHear);
-  });
-});
-
-http.listen(config.port, () => {
-  console.log(`server running at ${config.port} ...`)
+http.listen($config.port, () => {
+  console.log(`server running at ${$config.port} ...`)
 });
 

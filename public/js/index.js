@@ -10,41 +10,31 @@ $(function () {
     if (!res.code) user = res.data;
   });
 
+  // history msgs
+  $.get('/msgs', function (res) {
+    if (res.code) return;
+    var msgs = res.data;
+    for (var k in msgs) {
+      appendMessage(msgs[k]);
+    }
+  });
+
   // socket
   var socket = io();
   var ioid = createID();
   $sbtn.click(function () {
     if ($input.val() === '') return;
-    var data = {
+    var message = {
       msg: $input.val(),
       ioid: ioid,
       user: user
     };
-    socket.emit('say', data);
+    socket.emit('say', message);
     $input.val('');
     return false;
   });
-  socket.on('hear', function(data){
-    console.log(data);
-    var isMe = data.ioid === ioid;
-    var $newMsg = $('<li>').addClass('row');
-    var $newMsgInner = $('<div>');
-    var $info = $('<div>').addClass('info');
-    var user = isMe ? '我' : data.user.name;
-    $info.append($('<span>').addClass('time').text(dateFormat(new Date(data.time), 'hh:mm:ss')));
-    $info.append($('<span>').addClass('user').text(user));
-    if (isMe) $info.css('text-align', 'right');
-    $newMsgInner.append($info);
-    $newMsgInner.append($('<div>').addClass('bubble').text(data.msg));
-    if (isMe) {
-      $newMsg.append($('<div>').addClass('col-md-5').addClass('col-xs-5'));
-      $newMsg.append($newMsgInner.addClass('col-md-7').addClass('col-xs-7').addClass('right'));
-    } else {
-      $newMsg.append($newMsgInner.addClass('col-md-7').addClass('col-xs-7').addClass('left'));
-      $newMsg.append($('<div>').addClass('col-md-5').addClass('col-xs-5'));
-    }
-    $msgs.append($newMsg);
-    scrollToBottom();
+  socket.on('hear', function(message){
+    appendMessage(message);
   });
 
   // hotkey
@@ -69,14 +59,39 @@ $(function () {
     return fmt;
   }
 
+  // core funcs
+  function appendMessage(message) {
+    var isMe = message.ioid === ioid;
+    var $newMsg = $('<li>').addClass('row');
+    var $newMsgInner = $('<div>');
+    var $info = $('<div>').addClass('info');
+    var user = isMe ? '我' : message.user.name;
+    $info.append($('<span>').addClass('time').text(dateFormat(new Date(message.time), 'hh:mm:ss')));
+    $info.append($('<span>').addClass('user').text(user));
+    if (isMe) $info.css('text-align', 'right');
+    $newMsgInner.append($info);
+    $newMsgInner.append($('<div>').addClass('bubble').text(message.msg));
+    if (isMe) {
+      $newMsg.append($('<div>').addClass('col-md-5').addClass('col-xs-5'));
+      $newMsg.append($newMsgInner.addClass('col-md-7').addClass('col-xs-7').addClass('right'));
+    } else {
+      $newMsg.append($newMsgInner.addClass('col-md-7').addClass('col-xs-7').addClass('left'));
+      $newMsg.append($('<div>').addClass('col-md-5').addClass('col-xs-5'));
+    }
+    $msgs.append($newMsg);
+    scrollToBottom();
+  }
+
+  // tool funcs
   function createID() {
     var matches = document.cookie.match('connect.sid=(.+)');
     return matches[1];
   }
 
   function scrollToBottom() {
-    console.log('scroll')
     var h = $(document).height() - $(window).height();
     $(document).scrollTop(h);
   }
+
+
 });

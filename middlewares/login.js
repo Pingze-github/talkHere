@@ -22,7 +22,6 @@ module.exports = function () {
         res.redirect('/login');
       }
     }
-    console.log(req.session.user);
 /*    if (req.url === '/login') {
       if (req.method === 'POST') {
         if (config.psts.includes(req.body.pst)) {

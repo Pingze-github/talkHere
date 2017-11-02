@@ -1,3 +1,6 @@
 
 global.ROOTPATH = __dirname;
-global.config = require('./config');
+
+global._ = require('lodash');
+global.$config = require('./config');
+global.$mdb = require('./models');

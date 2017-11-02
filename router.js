@@ -10,3 +10,8 @@ router.get('/', (req, res) => {
 router.get('/user', (req, res) => {
   res.json({code:0, data: req.session.user});
 });
+
+router.get('/msgs', async (req, res) => {
+  const msgs = await $mdb.message.get(20);
+  res.json({code:0, data: msgs});
+});
